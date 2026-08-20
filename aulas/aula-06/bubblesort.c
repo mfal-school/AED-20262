@@ -120,6 +120,54 @@ void bubbleSortMelhoria2(int vetor[], int tamanho, bool crescente) {
     printf("--- FIM DA ORDENACAO ---\n\n");
 }
 
+void bubbleSortMelhoria2DoWhile(int vetor[], int tamanho, bool crescente) {
+    bool houveTroca;
+    int i = 0; // Contador de passadas
+
+    do {
+        houveTroca = false; // Reseta a flag a cada nova passada
+        printf("\nPassada %d\n", i + 1);
+        printf("Vetor no inicio da passada: ");
+        imprimirVetor(vetor, tamanho);
+
+        // Laço interno: limite reduz a cada passada (tamanho - 1 - i)
+        for (int j = 0; j < tamanho - 1 - i; ++j) {
+            bool deveTrocar = false;
+
+            if (crescente) {
+                if (vetor[j] > vetor[j + 1]) {
+                    deveTrocar = true;
+                }
+            } else {
+                if (vetor[j] < vetor[j + 1]) {
+                    deveTrocar = true;
+                }
+            }
+
+            if (deveTrocar) {
+                printf("Trocando %d e %d\n", vetor[j], vetor[j + 1]);
+                int temp = vetor[j];
+                vetor[j] = vetor[j + 1];
+                vetor[j + 1] = temp;
+
+                houveTroca = true; // Marca que o vetor ainda não estava completamente ordenado
+                imprimirVetor(vetor, tamanho);
+            } else {
+                printf("Sem troca entre %d e %d\n", vetor[j], vetor[j + 1]);
+            }
+        }
+
+        i++; // Incrementa a passada para ajustar o limite do laço interno (tamanho - 1 - i)
+
+    } while (houveTroca && i < tamanho - 1); // Continua se houve troca E ainda há elementos a verificar
+
+    if (!houveTroca) {
+        printf("Nenhuma troca realizada na passada %d. Vetor ja ordenado!\n", i);
+    }
+
+    printf("--- FIM DA ORDENACAO ---\n\n");
+}
+
 
 int main() {
     int dados[] = { 5, 8, 2, 1, 8 };
@@ -136,6 +184,10 @@ int main() {
     printf("================= BUBBLE SORT 2a MELHORIA =================\n");
     int teste3[] = { 5, 8, 2, 1, 8 };
     bubbleSortMelhoria2(teste3, n, true);
+
+    printf("======== BUBBLE SORT 2a MELHORIA COM DO-WHILE =============\n");
+    int teste4[] = { 5, 8, 2, 1, 8 };
+    bubbleSortMelhoria2DoWhile(teste4, n, true);
 
     return 0;
 }
